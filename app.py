@@ -17,7 +17,7 @@ import seaborn as sns
 
 # import dataset
 
-spam_df = pd.read_csv(r'C:\Users\user\Downloads\emails.csv')
+spam_df = pd.read_csv(r'emails.csv')
 spam_df
 
 
