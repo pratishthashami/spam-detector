@@ -1,9 +1,9 @@
-# 📧 Full Streamlit NLP Spam Detector App (from scratch, ready to deploy)
+# 📧 Streamlit Spam Detector App
 
 import streamlit as st
 import pandas as pd
 import re
-from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from nltk.corpus import stopwords
 from nltk.stem import SnowballStemmer
@@ -13,7 +13,7 @@ nltk.download('stopwords')
 # ✅ 1. Load dataset
 spam_df = pd.read_csv('emails.csv')
 
-# ✅ 2. Text cleaning function
+# ✅ 2. Text preprocessing function
 def clean_text(text):
     text = text.lower()
     text = re.sub(r'[^a-z\s]', '', text)
@@ -26,27 +26,26 @@ def clean_text(text):
 spam_df['clean_text'] = spam_df['text'].apply(clean_text)
 
 # ✅ 3. Vectorization
-vectorizer = TfidfVectorizer(ngram_range=(1,2))
+vectorizer = CountVectorizer()
 X = vectorizer.fit_transform(spam_df['clean_text'])
 y = spam_df['spam']
 
-# ✅ 4. Train model
+# ✅ 4. Train model (simple Naive Bayes as in your code)
 model = MultinomialNB()
 model.fit(X, y)
 
-# ✅ 5. Streamlit app UI
-st.title("📧 Email Spam Detector")
-st.write("Enter any email text below, click **Predict**, and see if it's spam or not.")
+# ✅ 5. Streamlit app interface
+st.title("📧 Email Spam Detector (Naive Bayes)")
+st.write("Enter email text below and click Predict:")
 
-user_input = st.text_area("✏️ Type your email here:")
+user_input = st.text_area("✏️ Your email:")
 
 if st.button("🚀 Predict"):
-    cleaned = clean_text(user_input)
-    vector = vectorizer.transform([cleaned])
-    prediction = model.predict(vector)[0]
-    result = "🚫 Spam" if prediction == 1 else "✅ Not Spam"
+    cleaned_input = clean_text(user_input)
+    input_vector = vectorizer.transform([cleaned_input])
+    prediction = model.predict(input_vector)[0]
     st.subheader("Result:")
-    st.write(result)
+    st.write("🚫 Spam" if prediction == 1 else "✅ Not Spam")
 
 st.markdown("---")
-st.caption("Built with Streamlit and scikit-learn.")
+st.caption("Built from scratch based on original NLP spam detection code.")
