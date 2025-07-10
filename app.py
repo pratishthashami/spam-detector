@@ -102,7 +102,8 @@ print(x.toarray())
 # In[35]:
 
 
-print(sample_vectorizer.get_feature_names())
+print(sample_vectorizer.get_feature_names_out())
+
 
 
 # ## Apply count vectorizer to the spam/ham dataset
@@ -123,7 +124,7 @@ spamham_countvectorizer = vectorizer.fit_transform(spam_df['text'])
 # In[39]:
 
 
-print(vectorizer.get_feature_names())
+print(vectorizer.get_feature_names_out())
 
 
 # In[41]:
