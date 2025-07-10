@@ -2,3 +2,9 @@ streamlit
 pandas
 scikit-learn
 nltk
+streamlit
+pandas
+scikit-learn
+nltk
+matplotlib
+seaborn
